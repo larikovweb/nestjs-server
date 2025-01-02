@@ -13,8 +13,12 @@ export class UserService {
     return createdUser.save();
   }
 
-  async findAll(): Promise<User[]> {
-    return this.userModel.find().exec();
+  async findAllWithPagination(limit: number, offset: number): Promise<User[]> {
+    return this.userModel.find().skip(offset).limit(limit).exec();
+  }
+
+  async count(): Promise<number> {
+    return this.userModel.countDocuments().exec();
   }
 
   async findOne(id: string): Promise<User | null> {
